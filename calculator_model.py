@@ -1,4 +1,5 @@
 from math import *
+from playsound import playsound
 
 
 class CalculatorModel:
@@ -37,3 +38,7 @@ class CalculatorModel:
         for item in self.history:
             format_history.append(f"{item['input']} = {item['result']}")
         return format_history
+
+    @staticmethod
+    def play_sound():
+        playsound('sound.wav')

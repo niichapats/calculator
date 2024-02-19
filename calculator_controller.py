@@ -17,12 +17,12 @@ class CalculatorController:
             if success is True:
                 self.show_history()
         elif text[-1] == 'R':
-            self.view.display.config(text='')
+            self.view.display.config(text='', fg='Light goldenrod')
         elif text[-1] == 'L':
             result = self.model.delete_last(text_to_calculate)
-            self.view.display.config(text=result)
+            self.view.display.config(text=result, fg='Light goldenrod')
         else:
-            self.view.display.config(text=text)
+            self.view.display.config(text=text, fg='Light goldenrod')
 
     def function_handler(self, event):
         text = str(self.view.display['text'])
@@ -35,7 +35,7 @@ class CalculatorController:
             new_text = selected_math_function + '(' + text + ')'
         elif check_text == 'd':
             new_text = text + '(' + selected_math_function + '('
-        self.view.display.config(text=new_text)
+        self.view.display.config(text=new_text, fg='Light goldenrod')
 
     def evaluate_expression(self):
         text = str(self.view.display['text'])
@@ -45,6 +45,7 @@ class CalculatorController:
             self.view.display.config(text=result, fg='Light goldenrod')
         else:
             self.view.display.config(fg='red')  # Change color for invalid expression
+            self.model.play_sound()
 
     def recall_input(self):
         selected_history = self.view.selected_history()
