@@ -5,3 +5,4 @@
 - run in main.py
 
 ### **UML Diagram**
+![uml class diagram](./uml_calculator.jpg)
