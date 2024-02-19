@@ -1,10 +1,21 @@
+""" Controller for the calculator """
+
+import tkinter as tk
 from calculator_model import CalculatorModel
 from calculator_view import CalculatorView
-import tkinter as tk
 
 
 class CalculatorController:
+    """
+    Controller for the Calculator application.
+    Handle user interactions between the CalculatorModel and CalculatorView,
+    """
     def __init__(self):
+        """
+        Initialize the CalculatorController.
+        Create instances of the CalculatorModel and CalculatorView, establishing the
+        controller's connection with the model and view components.
+        """
         self.model = CalculatorModel()
         self.view = CalculatorView(self)
 
@@ -39,11 +50,14 @@ class CalculatorController:
         new_text = self.view.selected_function.get()
         selected_math_function = self.view.selected_function.get()
         check_text = text[-1] if text else None
-        if not text or check_text in ['*', '/', '+', '-', '^', '=']:  # handle when the last element on the display is an operator
+        if not text or check_text in ['*', '/', '+', '-', '^', '=']:
+            # handle when the last element on the display is an operator
             new_text = text + selected_math_function + '('
-        elif check_text in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:  # handle when the last element on the display is a number
+        elif check_text in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+            # handle when the last element on the display is a number
             new_text = selected_math_function + '(' + text + ')'
-        elif check_text == 'd':  # handle when the last element on the display is 'mod'
+        elif check_text == 'd':
+            # handle when the last element on the display is 'mod'
             new_text = text + '(' + selected_math_function + '('
         self.view.display.config(text=new_text, fg='Light goldenrod')
 

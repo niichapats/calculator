@@ -1,13 +1,17 @@
+""" UI for the calculator """
+
 import tkinter as tk
 from tkinter import ttk
 from keypad import Keypad
 
 
 class CalculatorView(tk.Tk):
+    """ Graphical user interface for the Calculator application. """
     def __init__(self, controller):
         """
-        Constructor
-        :param controller:
+        Initialize the CalculatorView.
+        :param controller: An instance of the CalculatorController class
+        to establish the connection between the view and the controller.
         """
         super().__init__()
         self.controller = controller
@@ -23,25 +27,33 @@ class CalculatorView(tk.Tk):
 
     def init_component(self):
         """
-        Initialize the CalculatorView instance.
+        Initialize components for the calculator view.
+        Sets up various UI elements, including labels, buttons, and a combobox,
+        and binds event handlers for user interactions.
         :return:
         """
-        self.history = tk.Label(self, text='History', bg='Black', fg='Salmon', font=('monospace', 15), anchor=tk.W)
+        self.history = tk.Label(self, text='History', bg='Black',
+                                fg='Salmon',font=('monospace', 15), anchor=tk.W)
         self.history.pack(side=tk.TOP, expand=True, fill=tk.BOTH)
 
-        self.history_listbox = tk.Listbox(self, bg='gray10', fg='LightSalmon', font=('monospace', 15), height=3, selectmode=tk.SINGLE)
+        self.history_listbox = tk.Listbox(self, bg='gray10', fg='LightSalmon',
+                                          font=('monospace', 15), height=3, selectmode=tk.SINGLE)
         self.history_listbox.pack(side=tk.TOP, expand=True, fill=tk.BOTH)
 
-        self.display = tk.Label(self, text='', bg='Black', fg='Light goldenrod', font=('monospace', 30), anchor=tk.E)
+        self.display = tk.Label(self, text='', bg='Black', fg='Light goldenrod',
+                                font=('monospace', 30), anchor=tk.E)
         self.display.pack(side=tk.TOP, expand=True, fill=tk.BOTH)
 
-        self.input_button = tk.Button(self, fg='PaleGreen4', text='Recall Input', command=self.controller.recall_input)
+        self.input_button = tk.Button(self, fg='PaleGreen4', text='Recall Input',
+                                      command=self.controller.recall_input)
         self.input_button.pack(side=tk.TOP, expand=True, fill=tk.BOTH)
 
-        self.result_button = tk.Button(self, fg='Cyan4', text='Recall Result', command=self.controller.recall_result)
+        self.result_button = tk.Button(self, fg='Cyan4', text='Recall Result',
+                                       command=self.controller.recall_result)
         self.result_button.pack(side=tk.TOP, expand=True, fill=tk.BOTH)
 
-        math_function_combobox = ttk.Combobox(self, textvariable=self.selected_function, values=self.math_function, state="readonly")
+        math_function_combobox = ttk.Combobox(self, textvariable=self.selected_function,
+                                              values=self.math_function, state="readonly")
         math_function_combobox.pack(side=tk.BOTTOM, anchor=tk.S, pady=10, expand=True, fill=tk.BOTH)
 
         self.operator_frame2.pack(side=tk.TOP, expand=True, fill=tk.BOTH)
@@ -76,6 +88,3 @@ class CalculatorView(tk.Tk):
         :return:
         """
         self.mainloop()
-
-
-

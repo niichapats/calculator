@@ -1,3 +1,5 @@
+"""Use for creating a keypad"""
+
 import tkinter as tk
 from tkinter import ttk, Frame
 
@@ -14,7 +16,7 @@ class Keypad(Frame):
 
         key_list = []
         row = len(self.keynames) // columns
-        options = {'sticky': tk.NSEW}  # make button fill the grid cell
+        options = {'sticky': tk.NSEW}
         for i in self.keynames:
             button = tk.Button(self, text=i)
             key_list.append(button)
@@ -34,23 +36,6 @@ class Keypad(Frame):
         for item in self.winfo_children():
             item.bind(sequence, function, add)
 
-    def __setitem__(self, key, value) -> None:
-        """Overrides __setitem__ to allow configuration of all buttons
-        using dictionary syntax.
-
-        Example: keypad['foreground'] = 'red'
-        sets the font color on all buttons to red.
-        """
-        pass
-
-    def __getitem__(self, key):
-        """Overrides __getitem__ to allow reading of configuration values
-        from buttons.
-        Example: keypad['foreground'] would return 'red' if the button
-        foreground color is 'red'.
-        """
-        return Keypad(self)
-
     def configure(self, cnf=None, **kwargs):
         """Apply configuration settings to all buttons.
 
@@ -60,12 +45,3 @@ class Keypad(Frame):
 
         for item in self.winfo_children():
             item.configure(cnf, **kwargs)
-
-if __name__ == '__main__':
-    keys = list('789456123 0.')  # = ['7','8','9',...]
-
-    root = tk.Tk()
-    root.title("Keypad Demo")
-    keypad = Keypad(root, keynames=keys, columns=3)
-    keypad.pack(expand=True, fill=tk.BOTH)
-    root.mainloop()

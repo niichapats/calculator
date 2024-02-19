@@ -1,14 +1,21 @@
+""" Model for the Calculator """
+
 from math import *
 from playsound import playsound
 
 
 class CalculatorModel:
+    """
+    Model for the Calculator application.
+    This class handles the calculation logic, history management,
+    and error handling for the calculator.
+    """
     def __init__(self):
         self.history = []
 
     def calculate_result(self, text):
         """
-        Calculate the result from the equation(text)
+        Calculate the result from the equation (text)
         :param text:
         :return Result , State(Success or not):
         """
