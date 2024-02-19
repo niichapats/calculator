@@ -7,7 +7,11 @@ class CalculatorModel:
         self.history = []
 
     def calculate_result(self, text):
-
+        """
+        Calculate the result from the equation(text)
+        :param text:
+        :return Result , State(Success or not):
+        """
         try:
             # Attempt to evaluate the expression
             if 'mod' in text:
@@ -23,17 +27,26 @@ class CalculatorModel:
 
     @staticmethod
     def delete_last(text):
+        """
+        Delete the last element that the user entered
+        :param text:
+        :return new_text:
+        """
         text = str(text)
         if len(text) == 1:
             return ''
-        result = text[:-1]
+        new_text = text[:-1]
         for math_function in ['exp', 'ln', 'log10', 'log2', 'sqrt']:
             if text.endswith(math_function):
                 selected_math_function = math_function
-                result = text.replace(selected_math_function, '')
-        return result
+                new_text = text.replace(selected_math_function, '')
+        return new_text
 
     def format_history(self):
+        """
+        Get formatted history for display on the screen
+        :return:
+        """
         format_history = []
         for item in self.history:
             format_history.append(f"{item['input']} = {item['result']}")
@@ -41,4 +54,8 @@ class CalculatorModel:
 
     @staticmethod
     def play_sound():
+        """
+        Play the sound (error sound)
+        :return:
+        """
         playsound('sound.wav')
