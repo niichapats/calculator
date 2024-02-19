@@ -13,7 +13,7 @@ class CalculatorModel:
     def __init__(self):
         self.history = []
 
-    def calculate_result(self, text):
+    def calculate_result(self, text: str):
         """
         Calculate the result from the equation (text)
         :param text:
@@ -28,18 +28,17 @@ class CalculatorModel:
             result = eval(text)
             new_history = {'input': text, 'result': result}
             self.history.append(new_history)
-            return result, True  # Indicate success
+            return str(result), True  # Indicate success
         except Exception as e:
             return str(e), False  # Return the error message and indicate failure
 
     @staticmethod
-    def delete_last(text):
+    def delete_last(text: str):
         """
         Delete the last element that the user entered
         :param text:
         :return new_text:
         """
-        text = str(text)
         if len(text) == 1:
             return ''
         new_text = text[:-1]
