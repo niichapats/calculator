@@ -1,18 +1,30 @@
+from math import *
+
+
 class CalculatorModel:
     def __init__(self):
         self.history = []
 
     def calculate_result(self, text):
-        if 'mod' in text:
-            text = text.replace('mod', '%')
-        result = eval(text)
-        new_history = str(text) + ' = ' + str(result)
-        self.history.append(new_history)
-        print(self.history)
-        return result
+
+        try:
+            # Attempt to evaluate the expression
+            if 'mod' in text:
+                text = text.replace('mod', '%')
+            if 'ln' in text:
+                text = text.replace('ln', 'log')
+            result = eval(text)
+            new_history = {'input': text, 'result': result}
+            self.history.append(new_history)
+            return result, True  # Indicate success
+        except Exception as e:
+            return str(e), False  # Return the error message and indicate failure
 
     @staticmethod
     def delete_last(text):
+        text = str(text)
+        if len(text) == 1:
+            return ''
         result = text[:-1]
         for math_function in ['exp', 'ln', 'log10', 'log2', 'sqrt']:
             if text.endswith(math_function):
@@ -20,14 +32,8 @@ class CalculatorModel:
                 result = text.replace(selected_math_function, '')
         return result
 
-    def show_history(self):
-        text_history = ''
-        for history in self.history:
-            text_history += history + '  |  '
-        print(text_history)
-        return text_history
-
-
-if __name__ == '__main__':
-    model = CalculatorModel()
-    model.show_history()
+    def format_history(self):
+        format_history = []
+        for item in self.history:
+            format_history.append(f"{item['input']} = {item['result']}")
+        return format_history

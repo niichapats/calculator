@@ -1,5 +1,6 @@
 from calculator_model import CalculatorModel
 from calculator_view import CalculatorView
+import tkinter as tk
 
 
 class CalculatorController:
@@ -10,10 +11,11 @@ class CalculatorController:
     def number_operator_handler(self, event):
         text = str(self.view.display['text']) + event.widget['text']
         text_to_calculate = self.view.display['text']
+        result, success = self.model.calculate_result(text_to_calculate)
         if text[-1] == '=':
-            result = self.model.calculate_result(text_to_calculate)
-            self.view.display.config(text=result)
-            self.view.history.config(text=f'History : {self.model.show_history()}')
+            self.evaluate_expression()
+            if success is True:
+                self.show_history()
         elif text[-1] == 'R':
             self.view.display.config(text='')
         elif text[-1] == 'L':
@@ -35,11 +37,39 @@ class CalculatorController:
             new_text = text + '(' + selected_math_function + '('
         self.view.display.config(text=new_text)
 
+    def evaluate_expression(self):
+        text = str(self.view.display['text'])
+        result, success = self.model.calculate_result(text)
+
+        if success:
+            self.view.display.config(text=result, fg='Light goldenrod')
+        else:
+            self.view.display.config(fg='red')  # Change color for invalid expression
+
+    def recall_input(self):
+        selected_history = self.view.selected_history()
+        selected_input = None
+        for item in self.model.history:
+            if f"{item['input']} = {item['result']}" == selected_history:
+                selected_input = item['input']
+        self.view.display.config(text=selected_input)
+
+    def recall_result(self):
+        selected_history = self.view.selected_history()
+        selected_result = None
+        for item in self.model.history:
+            if f"{item['input']} = {item['result']}" == selected_history:
+                selected_result = item['result']
+        self.view.display.config(text=selected_result)
+
+    def show_history(self):
+        history = self.model.format_history()
+        self.view.history_listbox.insert(tk.END, history[-1])
+
     def run(self):
         self.view.run()
 
 
 if __name__ == '__main__':
     calculator = CalculatorController()
-    # calculator.get_history()
     calculator.run()
